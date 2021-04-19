@@ -1,0 +1,9 @@
+input, canvas {
+    display: block;
+}
+
+.grid-colors{
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: repeat(auto-fill, 100px);
+}
