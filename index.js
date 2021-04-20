@@ -1,3 +1,4 @@
+// Получение всех необходимых элементов html
 const fileInput = document.getElementById("person_picture")
 const imageCanvas = document.getElementById("imageCanvas")
 const imageCanvasContext = imageCanvas.getContext('2d')
@@ -6,11 +7,13 @@ const colorTxt = document.getElementsByClassName("color")
 const colorBgs = document.getElementsByClassName("color_bg")
 
 const predictedSpan = document.getElementsByClassName("predict")
+
 // Цвет кожи определяется как сумма R G B. Значения захардкожены
-// На основе цветов из skinSamples
+// На основе людей из skinSamples
 const blackSkinSample = 28 + 23 + 20
 const mulattoSkinSample = 173 + 120 + 94
 const whiteSkinSample = 245 + 218 + 207
+
 
 let clickCounter = 0
 let pickedColors = []
@@ -21,6 +24,7 @@ function rgbToHex(color){
     :    Number(color).toString(16)
 }
 
+//Функция обрабатывающая данные пикселя
 function colorPickingLogic(r, g, b){
     let currentBlock = clickCounter % colorBgs.length
     colorTxt[currentBlock].textContent = `#${rgbToHex(r)}${rgbToHex(g)}${rgbToHex(b)}`
@@ -31,22 +35,22 @@ function colorPickingLogic(r, g, b){
     clickCounter += 1
 }
 
-let fileList = []
+// Отрисовывающаяся картинка
 let image = new Image
 
+// Эвент для установки источника картинки по выбору файла
 fileInput.addEventListener("change", (event)=>{
-    fileList = event.target.files
-    console.log(fileList)
-
-    image.src = URL.createObjectURL(fileList[0])
+    image.src = URL.createObjectURL(event.target.files[0])
 })
 
+// Отрисовка картинки на canvas
 image.onload = function(e){
     imageCanvas.setAttribute("width", this.width)
     imageCanvas.setAttribute("height", this.height)
     imageCanvasContext.drawImage(image, 0, 0)
 }
 
+// Логика выбора пикселя и определения цвета кожи
 imageCanvas.addEventListener("click", (e) =>{
     let rect = e.target.getBoundingClientRect()
     let pixel = imageCanvasContext.getImageData(e.clientX - rect.left, e.clientY - rect.top, 1, 1).data
@@ -59,7 +63,6 @@ imageCanvas.addEventListener("click", (e) =>{
         let m = 0
 
         pickedColors.forEach(element => {
-            console.log(element);
             if (element >= whiteSkinSample){
                 w += 1
             } else if (element <= blackSkinSample){
@@ -70,7 +73,6 @@ imageCanvas.addEventListener("click", (e) =>{
         })
 
         let mostTo = Math.max(b, w, m)
-        console.log(mostTo);
 
         if ([w, m, b].every(element => element == w)){
             predictedSpan[0].textContent = "probably mulatto"
@@ -81,8 +83,6 @@ imageCanvas.addEventListener("click", (e) =>{
         } else {
             predictedSpan[0].textContent = "mulatto"
         }
-
-        console.log(w, m, b);
     }
 
 })
