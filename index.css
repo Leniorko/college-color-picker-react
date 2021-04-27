@@ -2,6 +2,11 @@ input, canvas {
     display: block;
 }
 
+body {
+    display: grid;
+    place-items: center;
+}
+
 .grid-colors{
     display: grid;
     grid-template-columns: 100px 100px 100px;
