@@ -2,6 +2,7 @@ interface FilePickerProps {
   getImageFunc: Function;
 }
 
+// Simple file input
 export function FilePickerComponent(props: FilePickerProps) {
   return (
     <input

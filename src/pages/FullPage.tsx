@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { useState } from "react";
 import { ColorPickerComponent } from "../components/ColorPicker";
 import { FilePickerComponent } from "../components/FilePicker";
 
@@ -7,37 +7,35 @@ interface FileInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
 }
 
+//Interface that describes image sizes.
 export interface ImageSize {
   width: Number;
   height: Number;
 }
 
+// Entire page as one component.
 export function FullPagePage() {
-  const [image, setImage] = useState<HTMLImageElement>();
-  const [imageSize, setParam] = useState<ImageSize>({
+  const [image, setImage] = useState<HTMLImageElement>(new Image());
+  const [imageSize, setImageSize] = useState<ImageSize>({
     width: 100,
     height: 100,
   });
   const [canvas, setCanvas] = useState<HTMLCanvasElement>();
   const [canvasContext, setContext] = useState<CanvasRenderingContext2D>();
 
-  const actualImage = new Image();
-
   function getImageFromInput(e: FileInputEvent) {
     if (e.target.files) {
-      console.log(e.target.files[0]);
-
-      actualImage.src = URL.createObjectURL(e.target.files[0]);
-      setImage(actualImage);
+      image.src = URL.createObjectURL(e.target.files[0]);
     }
   }
 
-  actualImage.onload = function (e) {
-    setParam({
-      width: actualImage.width,
-      height: actualImage.height,
+  // Draws image when it is loaded
+  image.onload = function (e) {
+    setImageSize({
+      width: image.width,
+      height: image.height,
     });
-    canvasContext?.drawImage(actualImage, 0, 0);
+    canvasContext?.drawImage(image, 0, 0);
   };
 
   return (
