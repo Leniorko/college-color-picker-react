@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { ColorPickedComponent } from "../components/ColorPicked";
 import { ColorPickerComponent } from "../components/ColorPicker";
 import { FilePickerComponent } from "../components/FilePicker";
+import { StateControlsComponent } from "../components/StateControls";
 
 // Interface that describes event for file input
 interface FileInputEvent extends Event {
@@ -9,8 +11,8 @@ interface FileInputEvent extends Event {
 
 //Interface that describes image sizes.
 export interface ImageSize {
-  width: Number;
-  height: Number;
+  width: number;
+  height: number;
 }
 
 // Entire page as one component.
@@ -22,6 +24,8 @@ export function FullPagePage() {
   });
   const [canvas, setCanvas] = useState<HTMLCanvasElement>();
   const [canvasContext, setContext] = useState<CanvasRenderingContext2D>();
+  const [amountOfColors, setColorsAmount] = useState<number>(3);
+  const [isInPickingMode, setPickingMode] = useState<boolean>(false);
 
   function getImageFromInput(e: FileInputEvent) {
     if (e.target.files) {
@@ -46,6 +50,15 @@ export function FullPagePage() {
         imageSize={imageSize}
         setCanvasContext={setContext}
       />
+      <StateControlsComponent
+        amountOfColors={amountOfColors}
+        setColorsAmount={setColorsAmount}
+        isInPickingMode={isInPickingMode}
+        setPickingMode={setPickingMode}
+      />
+      <div className="choosed-oolors-list">
+        {/* TODO Generate list of ColorPickedComponent and add logic to load colors in them */}
+      </div>
     </>
   );
 }

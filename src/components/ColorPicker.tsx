@@ -7,18 +7,15 @@ interface canvasProps {
   imageSize: ImageSize;
 }
 
-function rgbToHex(color: Number) {
+function rgbToHex(color: number) {
   return Number(color).toString(16).length === 1
     ? "0" + Number(color).toString(16)
     : Number(color).toString(16);
 }
 
-// TODO create boxes with representation of pciker colors
-// TODO maybe create "picking mode" for color picking purpose.
 export function ColorPickerComponent(props: canvasProps) {
-
   const [clickCounter, setCounter] = useState(0);
-  const [colors, setColors] = useState([0,0,0])
+  const [colors, setColors] = useState([0, 0, 0, 0]);
 
   function pickColorOnClick(
     e: React.MouseEvent<HTMLCanvasElement, MouseEvent>
@@ -35,13 +32,13 @@ export function ColorPickerComponent(props: canvasProps) {
     ).data;
     const [r, g, b, a] = [pixel?.[0], pixel?.[1], pixel?.[2], pixel?.[3]];
     console.log(r, g, b, a);
-    
-    const currentColorBlock = clickCounter % 3
 
-    const currentColors = [...colors]
-    currentColors[currentColorBlock] = r!! + g!! + b!!
-    setColors(currentColors)
-    setCounter(clickCounter+1)
+    const currentColorBlock = clickCounter % 3;
+
+    const currentColors = [...colors];
+    currentColors[currentColorBlock] = r!! + g!! + b!!;
+    setColors(currentColors);
+    setCounter(clickCounter + 1);
   }
 
   // Setting up context of canvas
@@ -50,8 +47,8 @@ export function ColorPickerComponent(props: canvasProps) {
     <canvas
       ref={canvasRef}
       className="color-picker-canvas"
-      width={props.imageSize.width.toString()}
-      height={props.imageSize.height.toString()}
+      width={props.imageSize.width}
+      height={props.imageSize.height}
       onClick={(e) => pickColorOnClick(e)}
     ></canvas>
   );
