@@ -4,17 +4,11 @@ interface colorProps {
 
 export function ColorPickedComponent(props: colorProps) {
   return (
-    <div
-      className="color-picked"
-      style={{
-        width: 100,
-        height: 100,
-      }}
-    >
+    <div className="color-picked">
       <p className="color-picked__value">{props.colorValue}</p>
       <div
         className="color-picked__view"
-        style={{ background: props.colorValue, width: 80, height: 80 }}
+        style={{ background: props.colorValue }}
       ></div>
     </div>
   );

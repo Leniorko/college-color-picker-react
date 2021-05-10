@@ -4,6 +4,7 @@ import { ColorPickerComponent } from "../components/ColorPicker";
 import { FilePickerComponent } from "../components/FilePicker";
 import { ResultComponent } from "../components/Result";
 import { StateControlsComponent } from "../components/StateControls";
+import "./FullPage.css";
 
 // Interface that describes event for file input
 interface FileInputEvent extends Event {
@@ -84,7 +85,7 @@ export function FullPagePage() {
   }
 
   return (
-    <>
+    <div className="full-page">
       <FilePickerComponent
         getImageFunc={getImageFromInput}
         isInPickingMode={isInPickingMode}
@@ -109,8 +110,7 @@ export function FullPagePage() {
       <div className="choosed-colors-list">
         {colors[0] === "0" ? <></> : colorsMap}
       </div>
-
       {colors[0] === "0" ? <></> : <ResultComponent result={result} />}
-    </>
+    </div>
   );
 }
