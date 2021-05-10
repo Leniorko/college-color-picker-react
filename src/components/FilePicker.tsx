@@ -1,5 +1,6 @@
 interface FilePickerProps {
   getImageFunc: Function;
+  isInPickingMode: boolean;
 }
 
 // Simple file input
@@ -10,6 +11,7 @@ export function FilePickerComponent(props: FilePickerProps) {
       name="imageInput"
       accept="image/*"
       onChange={(event) => props.getImageFunc(event)}
+      disabled={props.isInPickingMode}
     />
   );
 }

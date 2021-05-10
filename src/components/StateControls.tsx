@@ -1,8 +1,8 @@
 interface stateControlProps {
   amountOfColors: number;
-  setColorsAmount: Function;
+  setColorsAmount: (amountOfColors: number) => void;
   isInPickingMode: boolean;
-  setPickingMode: Function;
+  setPickingMode: (isInPickingMode: boolean) => void;
 }
 
 export function StateControlsComponent(props: stateControlProps) {
@@ -16,24 +16,25 @@ export function StateControlsComponent(props: stateControlProps) {
         type="number"
         name="Amount of collors to pick"
         placeholder="How much colors you want to peak?"
-        disabled={props.isInPickingMode ? true : false}
+        disabled={props.isInPickingMode}
         value={props.amountOfColors}
         min={1}
         max={15}
         onChange={(e) => {
-          const curColors = Number.parseInt(e.target.value);
-          if (curColors > 15) {
-            props.setColorsAmount(15);
-          } else if (curColors < 1) {
-            props.setColorsAmount(1);
-          } else {
-            props.setColorsAmount(e.target.value);
+          let value = e.target.value;
+
+          if (Number(value) > 15) {
+            value = "15";
+          } else if (value === "") {
+          } else if (Number(value) < 1) {
+            value = "1";
           }
+          props.setColorsAmount(Number(value));
         }}
       />
       <button
         className="enterToPickMode"
-        disabled={props.isInPickingMode ? true : false}
+        disabled={props.isInPickingMode}
         onClick={changeStateHandler}
       >
         Enter to pick mode
