@@ -45,8 +45,8 @@ export function FullPagePage() {
   const [result, setResult] = useState<string>("");
 
   function getImageFromInput(e: FileInputEvent) {
-    if (e.target.files) {
-      image.src = URL.createObjectURL(e.target.files[0]);
+    if (e.target.files?.length !== 0) {
+      image.src = URL.createObjectURL(e.target.files!![0]);
     }
   }
 
